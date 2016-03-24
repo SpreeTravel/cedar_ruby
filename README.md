@@ -1,1 +1,1 @@
-# cedar_ruby
+# Cedar Ruby
