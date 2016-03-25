@@ -10,7 +10,7 @@ RUN /opt/rbenv/plugins/ruby-build/install.sh
 ENV PATH /opt/rbenv/bin:$PATH
 
 RUN echo 'eval "$(rbenv init -)"' >> /etc/profile.d/rbenv.sh
-RUN echo 'eval "$(rbenv init -)"' >> .bashrc
+RUN echo 'eval "$(rbenv init -)"' >> /root/.bashrc
 
 # Install multiple versions of ruby
 ENV CONFIGURE_OPTS --disable-install-doc
