@@ -3,13 +3,21 @@
 set -e
 set -x
 
-apt-get update
-apt-get upgrade -y --force-yes
-apt-get install -y --force-yes \
-    rbenv
+git clone https://github.com/rbenv/rbenv.git ~/.rbenv
+echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bashrc
+echo 'eval "$(rbenv init -)"' >> ~/.bashrc
+exec $SHELL
+
+git clone https://github.com/rbenv/ruby-build.git ~/.rbenv/plugins/ruby-build
+echo 'export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"' >> ~/.bashrc
+exec $SHELL
+
+git clone https://github.com/rbenv/rbenv-gem-rehash.git ~/.rbenv/plugins/rbenv-gem-rehash
 
 rbenv install 2.2.3
 rbenv global 2.2.3
+ruby -v
+
 gem install bundler
 
 echo -e "\nSuccess!"
