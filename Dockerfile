@@ -1,6 +1,8 @@
 FROM heroku/cedar:14
 MAINTAINER D.H. Bahr <dhbahr@gmail.com>
 
+ENV PORT 5000
+
 RUN mkdir -p /app/user
 WORKDIR /app/user
 
@@ -26,9 +28,12 @@ ENV BUNDLE_APP_CONFIG /app/heroku/ruby/.bundle/config
 # export env vars during run time
 RUN mkdir -p /app/.profile.d/
 RUN echo "cd /app/user/" > /app/.profile.d/home.sh
-ONBUILD RUN echo "export PATH=\"$PATH\" GEM_PATH=\"$GEM_PATH\" GEM_HOME=\"$GEM_HOME\" RAILS_ENV=\"\${RAILS_ENV:-$RAILS_ENV}\" SECRET_KEY_BASE=\"\${SECRET_KEY_BASE:-$SECRET_KEY_BASE}\" BUNDLE_APP_CONFIG=\"$BUNDLE_APP_CONFIG\"" > /app/.profile.d/ruby.sh
+RUN echo "export PATH=\"$PATH\" GEM_PATH=\"$GEM_PATH\" GEM_HOME=\"$GEM_HOME\" RAILS_ENV=\"\${RAILS_ENV:-$RAILS_ENV}\" SECRET_KEY_BASE=\"\${SECRET_KEY_BASE:-$SECRET_KEY_BASE}\" BUNDLE_APP_CONFIG=\"$BUNDLE_APP_CONFIG\"" > /app/.profile.d/ruby.sh
 
 COPY ./init.sh /usr/bin/init.sh
 RUN chmod +x /usr/bin/init.sh
+
+RUN mkdir -p /app/buildpack
+RUN git clone https://github.com/openjaf/simple-buildpack-ruby.git /app/buildpack
 
 RUN /usr/bin/init.sh

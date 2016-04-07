@@ -5,3 +5,5 @@ for SCRIPT in /app/.profile.d/*;
 done
 
 exec "$@"
+
+
